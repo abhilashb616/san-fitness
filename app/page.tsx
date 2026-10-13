@@ -10,9 +10,9 @@ const images = {
   training: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1200&q=85',
   coach: 'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=1200&q=85',
   couple: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=1200&q=85',
-  detail: 'https://images.unsplash.com/photo-1586401100295-7a841e8f8b1b?auto=format&fit=crop&w=1200&q=85',
+  detail: 'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=1200&q=85',
   lift: 'https://images.unsplash.com/photo-1534367610401-9f5ed68180aa?auto=format&fit=crop&w=1200&q=85',
-  woman: 'https://images.unsplash.com/photo-1583454113625-9d1f7f7b8a7c?auto=format&fit=crop&w=1200&q=85',
+  woman: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=1200&q=85',
 }
 
 type Category = 'Standard Package' | 'Couple Package' | 'Personal Training'
