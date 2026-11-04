@@ -5,7 +5,7 @@ import { AnimatePresence, motion, useScroll, useTransform } from 'motion/react'
 import { Accessibility, Activity, Apple, ArrowDownRight, ArrowRight, Check, ChevronLeft, ChevronRight, Compass, Dumbbell, HeartHandshake, Menu, PersonStanding, Scale, Sparkles, Star, Target, Users, Video, X } from 'lucide-react'
 
 const logo = 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/logo-8uxTlcNsibAus1SGaZ7lhWILlOxnQm.jpeg'
-const gymLocation = 'https://maps.app.goo.gl/Fkncb4wz5i3LSfv89?g_st=aw'
+const gymLocation = 'https://maps.app.goo.gl/jGUCEEdGgGd1iLJs5'
 const gymMapEmbed = 'https://www.google.com/maps?q=8.8933169,76.6289833&z=17&output=embed'
 const images = {
   hero: 'https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=2000&q=90',
