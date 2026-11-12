@@ -7,6 +7,12 @@ import { Accessibility, Activity, Apple, ArrowDownRight, ArrowRight, Check, Chev
 const logo = 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/logo-8uxTlcNsibAus1SGaZ7lhWILlOxnQm.jpeg'
 const gymLocation = 'https://maps.app.goo.gl/jGUCEEdGgGd1iLJs5'
 const gymMapEmbed = 'https://www.google.com/maps?q=8.8933169,76.6289833&z=17&output=embed'
+const galleryVideos = [
+  { src: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Video%202026-11-09%20at%2014.11.35-y1ksj80MPtaiwbuh8vYstdFMzxB8i1.mp4', label: 'SAN FITNESS training video 1' },
+  { src: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Video%202026-11-09%20at%2014.11.43-jjL2IfLIixHp8BlcJGcAVHsN0Ems5s.mp4', label: 'SAN FITNESS training video 2' },
+  { src: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Video%202026-11-09%20at%2014.11.50-CUmro8mCsfH13y3Jq9p0x1yC2Rlwew.mp4', label: 'SAN FITNESS training video 3' },
+  { src: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/WhatsApp%20Video%202026-11-09%20at%2014.12.25-8m7XHsYd5RHuiXu9DnAZiLZFhd9MOi.mp4', label: 'SAN FITNESS training video 4' },
+]
 const images = {
   hero: 'https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=2000&q=90',
   training: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1200&q=85',
@@ -56,7 +62,6 @@ export default function Page() {
   const [scrolled, setScrolled] = useState(false)
   const [category, setCategory] = useState<Category>('Standard Package')
   const [selected, setSelected] = useState<(typeof plans)[Category][number] | null>(null)
-  const [gallery, setGallery] = useState<string | null>(null)
   const [reviewIndex, setReviewIndex] = useState(0)
   const { scrollY } = useScroll()
   const heroY = useTransform(scrollY, [0, 800], [0, 120])
@@ -64,7 +69,7 @@ export default function Page() {
   const currentReview = reviews[reviewIndex]
 
   useEffect(() => { const onScroll = () => setScrolled(window.scrollY > 32); window.addEventListener('scroll', onScroll); return () => window.removeEventListener('scroll', onScroll) }, [])
-  useEffect(() => { document.body.style.overflow = selected || gallery || menu ? 'hidden' : ''; return () => { document.body.style.overflow = '' } }, [selected, gallery, menu])
+  useEffect(() => { document.body.style.overflow = selected || menu ? 'hidden' : ''; return () => { document.body.style.overflow = '' } }, [selected, menu])
 
   return <main className="site-shell">
     <header className={`nav ${scrolled ? 'nav-scrolled' : ''}`}>
@@ -98,14 +103,13 @@ export default function Page() {
 
     <section id="reviews" className="reviews section"><div className="section-number">07 / 09</div><Reveal className="reviews-heading"><p className="eyebrow purple">MEMBER STORIES</p><h2>THE WORK<br /><span>SHOWS.</span></h2><p className="section-intro">Progress, commitment, and transformations from the SAN FITNESS community.</p></Reveal><div className="review-layout"><Reveal className="review-quote"><span className="review-label"><Star /> MEMBER REVIEW</span><blockquote>“{currentReview.quote}”</blockquote><div className="review-author"><strong>{currentReview.name}</strong><span>Member transformation</span></div><div className="review-controls"><button onClick={() => setReviewIndex((reviewIndex - 1 + reviews.length) % reviews.length)} aria-label="Previous review"><ChevronLeft /></button><span>0{reviewIndex + 1} / 0{reviews.length}</span><button onClick={() => setReviewIndex((reviewIndex + 1) % reviews.length)} aria-label="Next review"><ChevronRight /></button></div></Reveal><Reveal className="transformation"><div className={`transformation-images ${currentReview.images.length === 1 ? 'transformation-images-single' : ''}`}>{currentReview.images.map((image) => <figure className="transformation-figure" key={image.src}><img src={image.src} alt={image.alt} /><figcaption>{image.label}</figcaption></figure>)}</div></Reveal></div></section>
 
-    <section id="gallery" className="gallery section"><div className="section-number">08 / 09</div><Reveal><p className="eyebrow purple">INSIDE SAN</p><h2>THE ROOM<br /><span>WHERE IT HAPPENS.</span></h2></Reveal><div className="gallery-grid">{[images.woman, images.training, images.detail, images.couple, images.coach].map((src, i) => <button className={`gallery-tile tile-${i}`} key={`${src}-${i}`} onClick={() => setGallery(src)}><img src={src} alt="SAN FITNESS training environment" /></button>)}</div></section>
+    <section id="gallery" className="gallery section"><div className="section-number">08 / 09</div><Reveal><p className="eyebrow purple">INSIDE SAN</p><h2>THE ROOM<br /><span>WHERE IT HAPPENS.</span></h2></Reveal><div className="gallery-grid">{galleryVideos.map((video, i) => <div className={`gallery-tile tile-${i}`} key={video.src}><video controls playsInline preload="none" aria-label={video.label}><source src={video.src} type="video/mp4" />Your browser does not support embedded videos.</video></div>)}</div></section>
 
     <section id="contact" className="enquiry section"><div className="enquiry-copy"><div className="section-number">09 / 09</div><p className="eyebrow purple">START TODAY</p><h2>READY TO<br /><span>LEVEL UP?</span></h2><p>Choose your plan and take the first step toward your fitness goals.</p><div className="contact-note"><span>CONTACT</span><strong>Enquiries welcome</strong><small>Use the form and our team will get back to you.</small></div><div className="location-card"><div className="location-card-heading"><span>FIND SAN FITNESS</span><a href={gymLocation} target="_blank" rel="noreferrer">Get directions <ArrowRight /></a></div><iframe src={gymMapEmbed} title="SAN FITNESS location map" loading="lazy" referrerPolicy="no-referrer-when-downgrade" /></div></div><form className="enquiry-form" onSubmit={(e) => e.preventDefault()}><label>Full name<input required placeholder="Your name" /></label><label>Phone number<input required type="tel" placeholder="+91 00000 00000" /></label><label>Email <small>(optional)</small><input type="email" placeholder="you@example.com" /></label><label>Membership category<select defaultValue={category} onChange={(e) => setCategory(e.target.value as Category)}>{Object.keys(plans).map((p) => <option key={p}>{p}</option>)}</select></label><label>Message <small>(optional)</small><textarea rows={4} placeholder="Tell us a little about your goals" /></label><button className="button button-primary" type="submit">Send Enquiry <ArrowRight /></button><p className="form-note">This form is ready to connect to your enquiry handler.</p></form></section>
 
     <footer><div className="footer-brand"><img src={logo} alt="SAN FITNESS" /><p>Train with purpose.<br />Become your strongest self.</p></div><div className="footer-links"><div><span>EXPLORE</span><a href="#about">About</a><a href="#services">Services</a><a href="#special-classes">Special Classes</a><a href="#training">Training</a><a href="#membership-plans">Memberships</a><a href="#reviews">Reviews</a></div><div><span>CONNECT</span><a href="#contact">Contact</a><a href="#gallery">Gallery</a><a href="#home">Back to top ↑</a></div></div><div className="footer-bottom"><span>© {new Date().getFullYear()} SAN FITNESS</span><span>BUILT BY DISCIPLINE.</span></div></footer>
 
     <AnimatePresence>{selected && <motion.div className="modal-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setSelected(null)}><motion.div className="enquiry-modal" initial={{ scale: .94, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: .94, opacity: 0 }} onClick={(e) => e.stopPropagation()}><button className="modal-close" onClick={() => setSelected(null)} aria-label="Close"><X /></button><p className="eyebrow purple">YOUR NEXT STEP</p><h2>{selected.duration}<br /><span>{selected.name.toUpperCase()}</span></h2><div className="modal-price">{selected.price}</div><p>{selected.description}</p><a className="button button-primary" href="#contact" onClick={() => setSelected(null)}>Continue to Enquiry <ArrowRight /></a></motion.div></motion.div>}</AnimatePresence>
-    <AnimatePresence>{gallery && <motion.div className="lightbox" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setGallery(null)}><button onClick={() => setGallery(null)} aria-label="Close gallery"><X /></button><img src={gallery} alt="SAN FITNESS gallery" onClick={(e) => e.stopPropagation()} /></motion.div>}</AnimatePresence>
   </main>
 }
 
