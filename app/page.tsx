@@ -65,6 +65,16 @@ const images = {
 };
 
 type Category = "Standard Package" | "Couple Package" | "Personal Training";
+const navigationItems = [
+    "About",
+    "Founder",
+    "Services",
+    "Special Classes",
+    "Training",
+    "Membership Plans",
+    "Reviews",
+    "Contact",
+];
 type EnquiryField = "fullName" | "phone" | "email";
 type EnquiryErrors = Partial<Record<EnquiryField, string>>;
 
@@ -261,6 +271,7 @@ function Reveal({
 export default function Page() {
     const [menu, setMenu] = useState(false);
     const [scrolled, setScrolled] = useState(false);
+    const [activeSection, setActiveSection] = useState("home");
     const [category, setCategory] = useState<Category>("Standard Package");
     const [selected, setSelected] = useState<
         (typeof plans)[Category][number] | null
@@ -338,7 +349,24 @@ export default function Page() {
     };
 
     useEffect(() => {
-        const onScroll = () => setScrolled(window.scrollY > 32);
+        const sectionIds = [
+            "home",
+            ...navigationItems.map((item) => item.toLowerCase().replaceAll(" ", "-")),
+        ];
+        const onScroll = () => {
+            setScrolled(window.scrollY > 32);
+
+            let currentSection = "home";
+            for (const id of sectionIds) {
+                const section = document.getElementById(id);
+                if (section && section.getBoundingClientRect().top <= 110) {
+                    currentSection = id;
+                }
+            }
+            setActiveSection(currentSection);
+        };
+
+        onScroll();
         window.addEventListener("scroll", onScroll);
         return () => window.removeEventListener("scroll", onScroll);
     }, []);
@@ -361,23 +389,19 @@ export default function Page() {
                     </span>
                 </a>
                 <nav className="desktop-nav">
-                    {[
-                        "About",
-                        "Founder",
-                        "Services",
-                        "Special Classes",
-                        "Training",
-                        "Membership Plans",
-                        "Reviews",
-                        "Contact",
-                    ].map((item) => (
-                        <a
-                            key={item}
-                            href={`#${item.toLowerCase().replaceAll(" ", "-")}`}
-                        >
-                            {item}
-                        </a>
-                    ))}
+                    {navigationItems.map((item) => {
+                        const sectionId = item.toLowerCase().replaceAll(" ", "-");
+                        return (
+                            <a
+                                key={item}
+                                href={`#${sectionId}`}
+                                className={activeSection === sectionId ? "active" : undefined}
+                                aria-current={activeSection === sectionId ? "location" : undefined}
+                            >
+                                {item}
+                            </a>
+                        );
+                    })}
                 </nav>
                 <a className="nav-cta desktop-nav" href="#membership-plans">
                     Join Now <ArrowUpRight />
@@ -399,25 +423,21 @@ export default function Page() {
                         exit={{ opacity: 0, y: -18 }}
                     >
                         <img src={logo} alt="SAN FITNESS" />
-                        {[
-                            "About",
-                            "Founder",
-                            "Services",
-                            "Special Classes",
-                            "Training",
-                            "Membership Plans",
-                            "Reviews",
-                            "Contact",
-                        ].map((item) => (
-                            <a
-                                key={item}
-                                onClick={() => setMenu(false)}
-                                href={`#${item.toLowerCase().replaceAll(" ", "-")}`}
-                            >
-                                {item}
-                                <ArrowRight />
-                            </a>
-                        ))}
+                        {navigationItems.map((item) => {
+                            const sectionId = item.toLowerCase().replaceAll(" ", "-");
+                            return (
+                                <a
+                                    key={item}
+                                    onClick={() => setMenu(false)}
+                                    href={`#${sectionId}`}
+                                    className={activeSection === sectionId ? "active" : undefined}
+                                    aria-current={activeSection === sectionId ? "location" : undefined}
+                                >
+                                    {item}
+                                    <ArrowRight />
+                                </a>
+                            );
+                        })}
                         <a
                             className="nav-cta"
                             onClick={() => setMenu(false)}
@@ -1263,6 +1283,29 @@ export default function Page() {
                         <a href="#contact">Contact</a>
                         <a href="#gallery">Gallery</a>
                         <a href="#home">Back to top ↑</a>
+                        <p className="footer-social-label">FOLLOW US ON</p>
+                        <a
+                            className="footer-social"
+                            href="https://www.instagram.com/sanfitness.fit"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label="Follow SAN FITNESS on Instagram"
+                        >
+                            <svg
+                                aria-hidden="true"
+                                viewBox="0 0 24 24"
+                                width="17"
+                                height="17"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="1.8"
+                            >
+                                <rect x="3" y="3" width="18" height="18" rx="5" />
+                                <circle cx="12" cy="12" r="4" />
+                                <circle cx="17.5" cy="6.5" r=".75" fill="currentColor" stroke="none" />
+                            </svg>
+                            Instagram
+                        </a>
                     </div>
                 </div>
                 <div className="footer-bottom">

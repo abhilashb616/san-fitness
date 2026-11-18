@@ -39,3 +39,5 @@ footer { padding:80px 8vw 28px; background:#111; display:grid; grid-template-col
 @layer base { * { @apply outline-ring/50; } }
 .enquiry-form button:disabled { cursor:wait; opacity:.7; }.form-note-error { color:#ff8c8c; }
 .enquiry-form .field-error { color:#ff8c8c; font-size:11px; letter-spacing:0; line-height:1.4; text-transform:none; }.enquiry-form input[aria-invalid="true"] { border-color:#ff8c8c; }
+.footer-social-label { margin:10px 0 -5px; color:#9d55ed; font-size:9px; letter-spacing:.2em; }.footer-links .footer-social { display:inline-flex; align-items:center; gap:9px; color:#aaa; }.footer-links .footer-social:hover { color:#c28cff; }
+.desktop-nav a:not(.nav-cta) { position:relative; transition:color .2s ease; }.desktop-nav a:not(.nav-cta).active { color:#c28cff; }.desktop-nav a:not(.nav-cta).active::after { position:absolute; right:0; bottom:-8px; left:0; height:2px; background:#9d55ed; content:""; }.mobile-menu a.active:not(.nav-cta) { color:#c28cff; }.mobile-menu a.active:not(.nav-cta) svg { color:#9d55ed; }
